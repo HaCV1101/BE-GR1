@@ -10,6 +10,7 @@ interface IUser {
   phone: string;
   address?: string;
   avatar?: string;
+  tags: string[];
   cv?: Types.ObjectId;
 }
 interface IUserMethods {
@@ -34,6 +35,7 @@ const schema = new Schema<IUser, UserModel, IUserMethods>(
     phone: { type: String, required: true, unique: true },
     address: { type: String },
     avatar: { type: String },
+    tags: [String],
     cv: { type: Types.ObjectId, ref: "CV" },
   },
   { timestamps: true }

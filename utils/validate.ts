@@ -85,7 +85,8 @@ export const jobValidator = {
   },
   tags: async (v?: string[]) => {
     try {
-      if (!v || !Array.isArray(v)) {
+      if (!v) return false;
+      if (!Array.isArray(v)) {
         throw "Tags must me array";
       }
       for (const tag of v) {
@@ -169,6 +170,133 @@ export const jobValidator = {
     }
   },
 };
+
+export const CVValidator = {
+  avatar: async (v?: string) => {
+    try {
+      // if (!v) throw "Avatar is required";
+      return false;
+    } catch (error: any) {
+      return <string>error;
+    }
+  },
+  goals: async (v?: string) => {
+    try {
+      // if (!v) throw "Goals is required";
+      return false;
+    } catch (error: any) {
+      return <string>error;
+    }
+  },
+  skills: async (v?: { title: string; details: string[] }[]) => {
+    try {
+      if (!v) return false;
+      for (const item of v) {
+        if (!item.title) throw "Skill title is required";
+        if (!item.details) throw "Skill details is required";
+        if (!Array.isArray(item.details)) {
+          throw "Skill details must be an array";
+        }
+        for (const detail of item.details) {
+          if (!detail) throw "Skill detail is required";
+        }
+      }
+      return false;
+    } catch (error: any) {
+      return <string>error;
+    }
+  },
+  tags: async (v?: string[]) => {
+    try {
+      if (!v) return false;
+      if (!Array.isArray(v)) {
+        throw "Tags must me array";
+      }
+      for (const tag of v) {
+        if (!TAGS.includes(tag)) {
+          throw "Tag must be in the list: " + TAGS.toString();
+        }
+      }
+      return false;
+    } catch (error: any) {
+      return <string>error;
+    }
+  },
+  applyPosition: async (v?: string) => {
+    try {
+      // if (!v) throw "Apply position is required";
+      return false;
+    } catch (error: any) {
+      return <string>error;
+    }
+  },
+  education: async (v?: {
+    university: string;
+    specialized: string;
+    graduationType: string;
+    period: string;
+  }) => {
+    try {
+      // if (!v) return false;
+      // if (!v.university) throw "Education university is required";
+      // if (!v.specialized) throw "Education specialized is required";
+      // if (!v.graduationType) throw "Education graduation type is required";
+      // if (!v.period) throw "Education period is required";
+      return false;
+    } catch (error: any) {
+      return <string>error;
+    }
+  },
+  experiences: async (v?: {
+    position: string;
+    company: string;
+    period: string;
+  }) => {
+    try {
+      // if (!v) throw "Experience is required";
+      // if (!v.position) throw "Experience position is required";
+      // if (!v.company) throw "Experience company is required";
+      // if (!v.period) throw "Experience period is required";
+      return false;
+    } catch (error: any) {
+      return <string>error;
+    }
+  },
+  hobbies: async (v?: string[]) => {
+    try {
+      if (!v) return false;
+      if (!Array.isArray(v)) throw "Hobbies must be an array";
+      for (const item of v) {
+        if (!item) throw "Hobby is required";
+      }
+      return false;
+    } catch (error: any) {
+      return <string>error;
+    }
+  },
+  contacts: async (v?: {
+    birthday: string;
+    gender: string;
+    address: string;
+    phone: string;
+    mail: string;
+    github: string;
+  }) => {
+    try {
+      // if (!v) throw "Contacts is required";
+      // if (!v.birthday) throw "Contacts birthday is required";
+      // if (!v.gender) throw "Contacts gender is required";
+      // if (!v.address) throw "Contacts address is required";
+      // if (!v.phone) throw "Contacts phone is required";
+      // if (!v.mail) throw "Contacts mail is required";
+      // if (!v.github) throw "Contacts github is required";
+      return false;
+    } catch (error) {
+      return <string>error;
+    }
+  },
+};
+
 export default async function validate<
   T extends Record<string, (v?: any) => Promise<string | false>>
 >(validator: T, payload: { [key in keyof T]?: any }, paths?: (keyof T)[]) {

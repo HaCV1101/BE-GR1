@@ -8,4 +8,11 @@ router.post(
   authMiddleware.verifyCompany,
   jobController.create
 );
+router.get("/:jobId/suitableCandidates", jobController.getSuitableCandidates);
+router.get(
+  "/suitableJobs",
+  authMiddleware.verifyToken,
+  authMiddleware.verifyCandidate,
+  jobController.getsuitableJobs
+);
 export default router;
