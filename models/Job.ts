@@ -5,8 +5,9 @@ export interface IJob {
   name: string;
   career: string;
   info: string;
-  require: { title: string; skill: string[] }[];
-  salary: string;
+  tags: string[];
+  require: { title: string; skills: string[] }[];
+  salary: number;
   recruitmentTime: string;
   jobType: string;
   address: string;
@@ -27,14 +28,15 @@ const schema = new Schema<IJob, JobModel, IJobMethods>(
     //implement model properties here
     name: { type: String },
     career: { type: String },
+    tags: [String],
     info: { type: String },
     require: [
       {
         title: { type: String },
-        skill: [{ type: String }],
+        skills: [{ type: String }],
       },
     ],
-    salary: { type: String },
+    salary: { type: Number },
     recruitmentTime: { type: String },
     jobType: { type: String },
     address: { type: String },

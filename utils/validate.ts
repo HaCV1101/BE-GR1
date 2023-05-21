@@ -49,6 +49,7 @@ export const userValidator = {
 //   }
 //   return false;
 // }
+const TAGS = ["reactjs", "react-native", "nodejs", "php", "devops", "java"];
 export const companyValidator = {
   name: async (v?: string) => {
     if (!v) return "Name is required";
@@ -82,16 +83,31 @@ export const jobValidator = {
     if (!v) return "Info is required";
     return false;
   },
-  require: async (v?: { title: string; skill: string[] }[]) => {
+  tags: async (v?: string[]) => {
+    try {
+      if (!v || !Array.isArray(v)) {
+        throw "Tags must me array";
+      }
+      for (const tag of v) {
+        if (!TAGS.includes(tag)) {
+          throw "Tag must be in the list: " + TAGS.toString();
+        }
+      }
+      return false;
+    } catch (error: any) {
+      return <string>error;
+    }
+  },
+  require: async (v?: { title: string; skills: string[] }[]) => {
     if (!v) return "Require is required";
     try {
       for (const item of v) {
         if (!item.title) throw "Require title is required";
-        if (!item.skill) throw "Require skill is required";
-        if (!Array.isArray(item.skill)) {
-          throw "Require skill must be an array";
+        if (!item.skills) throw "Require skills is required";
+        if (!Array.isArray(item.skills)) {
+          throw "Require skills must be an array";
         }
-        for (const skill of item.skill) {
+        for (const skill of item.skills) {
           if (!skill) throw "Require skill is required";
         }
       }
